@@ -706,7 +706,7 @@ function dsFallbackReply(userText, lang, contextEntry) {
    the local knowledge base on any failure. */
 async function dsCallRealAI(history, lang) {
     try {
-        // Extract the latest user message from the history array
+        // Grab the latest message typed by the user
         const lastUserMsg = history[history.length - 1]?.content || "";
         
         const response = await fetch("https://digital-sathi-psi.vercel.app/api/chat", {
@@ -720,8 +720,6 @@ async function dsCallRealAI(history, lang) {
         if (!response.ok) return null;
         
         const data = await response.json();
-        
-        // Extract the reply text returned by Gemini API
         const replyText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
         return replyText || null;
     } catch (err) {
@@ -729,7 +727,6 @@ async function dsCallRealAI(history, lang) {
         return null;
     }
 }
-
 function dsInitAssistant() {
     const messagesEl = document.getElementById('assistantMessages');
     const inputEl = document.getElementById('assistantInput');
@@ -779,18 +776,15 @@ function dsInitAssistant() {
         const lang = dsGetLang();
         aiHistory.push({ role: 'user', content: text });
 
-        if (dsGetAiKey()) {
-            const thinkingMsg = addMsg('…', 'bot');
-            const aiReply = await dsCallRealAI(aiHistory.slice(-12), lang);
-            if (aiReply) {
-                thinkingMsg.textContent = aiReply;
-                messagesEl.scrollTop = messagesEl.scrollHeight;
-                aiHistory.push({ role: 'assistant', content: aiReply });
-                return;
-            }
-            thinkingMsg.remove();
-            // fall through to local knowledge base if the AI call failed
+const thinkingMsg = addMsg('...', 'bot');
+        const aiReply = await dsCallRealAI(aiHistory.slice(-12), lang);
+        if (aiReply) {
+            thinkingMsg.textContent = aiReply;
+            messagesEl.scrollTop = messagesEl.scrollHeight;
+            aiHistory.push({ role: 'assistant', content: aiReply });
+            return;
         }
+        thinkingMsg.remove();
 
         const result = dsFallbackReply(text, lang, lastEntry);
         if (result.entry) lastEntry = result.entry;
