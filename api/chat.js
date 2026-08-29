@@ -1,5 +1,4 @@
 export default async function handler(req, res) {
-  // 1. Set CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -8,19 +7,25 @@ export default async function handler(req, res) {
 
   try {
     const apiKey = process.env.GEMINI_API_KEY;
-    const userPrompt = req.body?.prompt || req.body?.message || (req.body?.contents ? null : "Hello");
-
-    // Format body for Gemini API structure
-    const requestPayload = req.body?.contents 
-      ? req.body 
-      : { contents: [{ parts: [{ text: userPrompt }] }] };
+    
+    // Extract prompt from whatever structure main.js sends
+    let userPrompt = "Hello";
+    if (req.body?.contents?.[0]?.parts?.[0]?.text) {
+      userPrompt = req.body.contents[0].parts[0].text;
+    } else if (req.body?.prompt) {
+      userPrompt = req.body.prompt;
+    } else if (req.body?.message) {
+      userPrompt = req.body.message;
+    }
 
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(requestPayload)
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: userPrompt }] }]
+        })
       }
     );
 
