@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fake News Awareness Quiz — Digital Saathi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a class="nav-brand" href="../index.html">🌐 Digital Saathi</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html" data-i18n="nav_home">Home</a></li>
+      <li><a href="../index.html#learn" data-i18n="nav_learn">Learn</a></li>
+      <li><a href="../quiz.html" data-i18n="nav_quizzes">Quizzes</a></li>
+      <li><a href="../safety.html" data-i18n="nav_safety">Safety</a></li>
+      <li><a href="../dashboard.html" data-i18n="nav_dashboard">Dashboard</a></li>
+      <li><a href="../about.html" data-i18n="nav_about">About</a></li>
+    </ul>
+    <div class="nav-controls">
+      <select id="langSelect" class="lang-select" aria-label="Choose language">
+        <option value="en">English</option>
+        <option value="hi">हिन्दी</option>
+        <option value="mr">मराठी</option>
+      </select>
+      <div class="font-size-controls">
+        <button id="fontDec" aria-label="Decrease text size">A−</button>
+        <button id="fontReset" aria-label="Reset text size">A</button>
+        <button id="fontInc" aria-label="Increase text size">A+</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<section class="hero">
+  <h1>📰 Fake News Awareness Quiz</h1>
+</section>
+
+<div class="quiz-wrap">
+  <div class="quiz-progress-text" id="progressText"></div>
+  <div class="quiz-progress-bar-outer"><div class="quiz-progress-bar-inner" id="progressBarInner" style="width:0%;"></div></div>
+
+  <div id="questionArea"></div>
+
+  <button id="nextBtn" disabled>Next</button>
+
+  <div id="resultArea" class="result-card hidden">
+    <h3 data-i18n="quiz_result_title">🎉 Quiz Completed!</h3>
+    <p>Your Score</p>
+    <div class="result-score" id="resultScore"></div>
+    <div class="result-percent" id="resultPercent"></div>
+    <div class="result-breakdown">
+      <span class="correct-count" id="resultCorrect"></span>
+      <span class="incorrect-count" id="resultIncorrect"></span>
+    </div>
+    <div class="result-best" id="resultBest"></div>
+    <div class="result-actions">
+      <button id="reviewBtn" class="btn btn-secondary">Review Answers</button>
+      <button id="restartBtn" class="btn btn-primary">Try Again</button>
+      <a id="nextTopicBtn" class="btn btn-secondary hidden" href="#"></a>
+      <a href="../dashboard.html" class="btn btn-secondary" data-i18n="quiz_back_dashboard">Back to Dashboard</a>
+    </div>
+    <div id="reviewList" class="review-list hidden"></div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-brand">Digital Saathi</div>
+  <div class="footer-tagline" data-i18n="footer_tagline">Learn • Practice • Stay Safe</div>
+  <div class="footer-links">
+    <a href="../index.html" data-i18n="nav_home">Home</a>
+    <a href="../index.html#learn" data-i18n="nav_learn">Learn</a>
+    <a href="../quiz.html" data-i18n="nav_quizzes">Quizzes</a>
+    <a href="../safety.html" data-i18n="nav_safety">Safety</a>
+    <a href="../dashboard.html" data-i18n="nav_dashboard">Dashboard</a>
+    <a href="../about.html" data-i18n="nav_about">About</a>
+  </div>
+  <div class="footer-copy">© 2026 Digital Saathi</div>
+</footer>
+
+<a id="chatToggle" href="../index.html#assistant" aria-label="Ask Digital Saathi">🤖</a>
+
+
+<script src="../js/question-banks.js"></script>
+<script src="../js/gamification.js"></script>
+<script src="../js/main.js"></script>
+<script>
+const quizId = "fake-news";
+const nextTopicUrl = "government-quiz.html";
+const nextTopicLabel = "Government Services";
+const questions = [
+    {
+        "q": "Before forwarding a surprising news message on WhatsApp, it's best to:",
+        "options": [
+            "Forward it immediately to warn everyone",
+            "Check if it's confirmed by a trusted news source first",
+            "Assume it's true since it sounds urgent",
+            "Forward it only to close friends"
+        ],
+        "correct": 1,
+        "explanation": "Verifying with a trusted source first prevents accidentally spreading false information."
+    },
+    {
+        "q": "If a message has been forwarded by many people, does that make it true?",
+        "options": [
+            "Yes, popularity always means it's true",
+            "No \u2014 many forwards do not guarantee accuracy",
+            "Yes, if it has more than 100 forwards",
+            "Only if it includes a photo"
+        ],
+        "correct": 1,
+        "explanation": "Misinformation can spread just as fast, or faster, than real news."
+    },
+    {
+        "q": "What is a good way to check if a piece of news is real?",
+        "options": [
+            "Ask only one friend if they believe it",
+            "Cross-check it with multiple reputable news sources",
+            "Trust it if the font is bold",
+            "Trust it if it has lots of exclamation marks"
+        ],
+        "correct": 1,
+        "explanation": "Checking multiple credible sources helps confirm accuracy before you believe or share it."
+    },
+    {
+        "q": "What does a fact-checking website do?",
+        "options": [
+            "Creates new news stories",
+            "Verifies claims, photos, or videos for authenticity",
+            "Deletes fake news from the internet automatically",
+            "Only checks weather reports"
+        ],
+        "correct": 1,
+        "explanation": "Fact-checking organizations investigate viral claims and publish evidence-based conclusions."
+    },
+    {
+        "q": "What's one way to check if an image or video might be doctored or taken out of context?",
+        "options": [
+            "Ignore it and share anyway",
+            "Look for inconsistencies or try a reverse image search",
+            "Assume all images are always real",
+            "Just look at how many likes it has"
+        ],
+        "correct": 1,
+        "explanation": "A reverse image search can reveal if a photo is old, edited, or from an unrelated event."
+    },
+    {
+        "q": "Sensational headlines in ALL CAPS with urgent language often indicate:",
+        "options": [
+            "Guaranteed factual reporting",
+            "Possible misinformation or clickbait",
+            "Government-verified news",
+            "Nothing unusual"
+        ],
+        "correct": 1,
+        "explanation": "Exaggerated, urgent-sounding headlines are a common tactic even when content is misleading."
+    },
+    {
+        "q": "If you realize you've already shared fake news, what should you do?",
+        "options": [
+            "Do nothing, it's not a big deal",
+            "Delete or correct the post and let others know it was inaccurate",
+            "Share it again to more people",
+            "Block everyone who saw it"
+        ],
+        "correct": 1,
+        "explanation": "Correcting the mistake helps stop the spread of misinformation."
+    },
+    {
+        "q": "Which is generally a more reliable source of information?",
+        "options": [
+            "An established, well-known news organization",
+            "A random forwarded message with no source",
+            "A message that says 'forward to 10 people'",
+            "A post with no author name"
+        ],
+        "correct": 0,
+        "explanation": "Established news organizations follow editorial standards and are accountable for what they publish."
+    },
+    {
+        "q": "What's a red flag when judging a news website's credibility?",
+        "options": [
+            "It has a clear author name and publish date",
+            "It has no author name, no date, and an unusual domain name",
+            "It links to its original sources",
+            "It corrects past mistakes publicly"
+        ],
+        "correct": 1,
+        "explanation": "Missing author/date info and strange domain names are common signs of low-credibility sites."
+    },
+    {
+        "q": "Which action helps reduce the spread of fake news online?",
+        "options": [
+            "Sharing anything that seems interesting",
+            "Reporting or flagging misleading content on the platform",
+            "Forwarding it to as many groups as possible",
+            "Ignoring whether it's true or false"
+        ],
+        "correct": 1,
+        "explanation": "Most platforms let you report false or misleading content, limiting how far it spreads."
+    }
+];
+</script>
+<script src="../js/quiz.js"></script>
+</body>
+</html>

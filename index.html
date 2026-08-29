@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Saathi — Learn Digital Skills Safely</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a class="nav-brand" href="index.html">🌐 Digital Saathi</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+      <li><a href="#learn" data-i18n="nav_learn">Learn</a></li>
+      <li><a href="quiz.html" data-i18n="nav_quizzes">Quizzes</a></li>
+      <li><a href="safety.html" data-i18n="nav_safety">Safety</a></li>
+      <li><a href="dashboard.html" data-i18n="nav_dashboard">Dashboard</a></li>
+      <li><a href="about.html" data-i18n="nav_about">About</a></li>
+    </ul>
+    <div class="nav-controls">
+      <select id="langSelect" class="lang-select" aria-label="Choose language">
+        <option value="en">English</option>
+        <option value="hi">हिन्दी</option>
+        <option value="mr">मराठी</option>
+      </select>
+      <div class="font-size-controls">
+        <button id="fontDec" aria-label="Decrease text size">A−</button>
+        <button id="fontReset" aria-label="Reset text size">A</button>
+        <button id="fontInc" aria-label="Increase text size">A+</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>Digital Saathi</h1>
+  <p class="subtitle" data-i18n="hero_sub">Your friendly guide to becoming digitally confident and safe.</p>
+  <div class="hero-cta">
+    <a href="#learn" class="btn btn-primary" data-i18n="btn_start">Start Learning</a>
+    <a href="quiz.html" class="btn btn-secondary" data-i18n="btn_quiz">Take a Quiz</a>
+  </div>
+</section>
+
+<div class="daily-tip-card">
+  <h3 data-i18n="daily_tip_title">💡 Digital Tip of the Day</h3>
+  <p id="dailyTipText"></p>
+</div>
+
+<div class="card-grid" style="max-width:750px;">
+  <div class="topic-card">
+    <div class="icon">🚨</div>
+    <h3 data-i18n="scam_game_title">Can You Spot the Scam?</h3>
+    <p>Test yourself against realistic scam scenarios.</p>
+    <a class="btn btn-primary" href="spot-the-scam.html">Play Now</a>
+  </div>
+  <div class="topic-card">
+    <div class="icon">🔎</div>
+    <h3 data-i18n="fnd_title">Fake News Detective</h3>
+    <p>Spot the warning signs in sample posts.</p>
+    <a class="btn btn-primary" href="fake-news-detective.html">Play Now</a>
+  </div>
+  <div class="topic-card">
+    <div class="icon">🆘</div>
+    <h3 data-i18n="help_title">What Should I Do?</h3>
+    <p>Get safe next steps for common tricky situations.</p>
+    <a class="btn btn-primary" href="help.html">Get Help</a>
+  </div>
+</div>
+
+<section id="learn">
+  <h2>Learn the Essentials</h2>
+  <p class="section-lead">Five simple topics to help you use the digital world safely and confidently.</p>
+
+  <div class="card-grid">
+
+    <div class="topic-card">
+      <div class="icon">📱</div>
+      <h3>Smartphone Basics</h3>
+      <ul>
+        <li>Smartphone settings</li>
+        <li>Wi-Fi and mobile data</li>
+        <li>Installing applications</li>
+        <li>Updating applications</li>
+        <li>Storage management</li>
+        <li>Screen lock</li>
+        <li>Bluetooth</li>
+        <li>Screenshots</li>
+        <li>Accessibility features</li>
+      </ul>
+      <a class="btn btn-primary" href="pages/smartphone.html">Learn Smartphone Basics</a>
+    </div>
+
+    <div class="topic-card">
+      <div class="icon">💳</div>
+      <h3>Digital Payments</h3>
+      <ul>
+        <li>What is UPI?</li>
+        <li>How UPI works</li>
+        <li>QR code payments</li>
+        <li>UPI PIN</li>
+        <li>OTP safety</li>
+        <li>Payment scams</li>
+        <li>Checking recipient details</li>
+        <li>Failed transactions</li>
+        <li>Safe digital payments</li>
+      </ul>
+      <a class="btn btn-primary" href="pages/payments.html">Learn Digital Payments</a>
+    </div>
+
+    <div class="topic-card">
+      <div class="icon">🔐</div>
+      <h3>Online Safety</h3>
+      <ul>
+        <li>Strong passwords</li>
+        <li>Two-factor authentication</li>
+        <li>Phishing</li>
+        <li>OTP safety</li>
+        <li>Privacy</li>
+        <li>Safe browsing</li>
+        <li>Social-media safety</li>
+        <li>Suspicious links</li>
+        <li>Scam awareness</li>
+      </ul>
+      <a class="btn btn-primary" href="pages/online-safety.html">Learn Online Safety</a>
+    </div>
+
+    <div class="topic-card">
+      <div class="icon">📰</div>
+      <h3>Fake News</h3>
+      <ul>
+        <li>What is fake news?</li>
+        <li>How misinformation spreads</li>
+        <li>How to verify information</li>
+        <li>Checking sources</li>
+        <li>Reverse image search concept</li>
+        <li>Misleading headlines</li>
+        <li>AI-generated misinformation</li>
+        <li>Responsible sharing</li>
+      </ul>
+      <a class="btn btn-primary" href="pages/fake-news.html">Learn Fake News Awareness</a>
+    </div>
+
+    <div class="topic-card">
+      <div class="icon">🇮🇳</div>
+      <h3>Government Digital Services</h3>
+      <ul>
+        <li>DigiLocker</li>
+        <li>UMANG</li>
+        <li>MyGov</li>
+        <li>Aadhaar-related digital services</li>
+        <li>Online government services</li>
+        <li>Identifying official government websites</li>
+        <li>Avoiding fake government websites</li>
+      </ul>
+      <a class="btn btn-primary" href="pages/government-services.html">Learn Government Services</a>
+    </div>
+
+  </div>
+</section>
+
+<h2 data-i18n="progress_title">Your Digital Progress</h2>
+<div class="progress-section">
+  <div class="overall-score">
+    <div data-i18n="progress_overall">Your Digital Safety Score</div>
+    <div class="score-num" id="overallScore">0%</div>
+  </div>
+  <div id="progressRows"></div>
+</div>
+
+<h2>🏆 Badges</h2>
+<div id="badgesGrid" class="badges-grid"></div>
+
+<section id="assistant" class="assistant-section">
+  <h2 data-i18n="assistant_title">🤖 Ask Digital Saathi</h2>
+  <div class="assistant-box">
+    <div class="assistant-quick">
+      <button data-topic="smartphone">Smartphone</button>
+      <button data-topic="payments">UPI</button>
+      <button data-topic="online-safety">Safety</button>
+      <button data-topic="fake-news">Fake News</button>
+      <button data-topic="government">Government</button>
+      <button data-topic="scam">Scam Awareness</button>
+    </div>
+    <div id="assistantMessages" class="assistant-messages"></div>
+    <div class="assistant-input-row">
+      <input id="assistantInput" type="text" data-i18n-placeholder="assistant_placeholder" placeholder="Type your question...">
+      <button id="assistantSendBtn" data-i18n="assistant_send">Send</button>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-brand">Digital Saathi</div>
+  <div class="footer-tagline" data-i18n="footer_tagline">Learn • Practice • Stay Safe</div>
+  <div class="footer-links">
+    <a href="index.html" data-i18n="nav_home">Home</a>
+    <a href="#learn" data-i18n="nav_learn">Learn</a>
+    <a href="quiz.html" data-i18n="nav_quizzes">Quizzes</a>
+    <a href="safety.html" data-i18n="nav_safety">Safety</a>
+    <a href="dashboard.html" data-i18n="nav_dashboard">Dashboard</a>
+    <a href="about.html" data-i18n="nav_about">About</a>
+  </div>
+  <div class="footer-copy">© 2026 Digital Saathi</div>
+</footer>
+
+<a id="chatToggle" href="#assistant" aria-label="Ask Digital Saathi">🤖</a>
+
+<script src="js/gamification.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

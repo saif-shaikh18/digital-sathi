@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Safety Quiz — Digital Saathi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a class="nav-brand" href="../index.html">🌐 Digital Saathi</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html" data-i18n="nav_home">Home</a></li>
+      <li><a href="../index.html#learn" data-i18n="nav_learn">Learn</a></li>
+      <li><a href="../quiz.html" data-i18n="nav_quizzes">Quizzes</a></li>
+      <li><a href="../safety.html" data-i18n="nav_safety">Safety</a></li>
+      <li><a href="../dashboard.html" data-i18n="nav_dashboard">Dashboard</a></li>
+      <li><a href="../about.html" data-i18n="nav_about">About</a></li>
+    </ul>
+    <div class="nav-controls">
+      <select id="langSelect" class="lang-select" aria-label="Choose language">
+        <option value="en">English</option>
+        <option value="hi">हिन्दी</option>
+        <option value="mr">मराठी</option>
+      </select>
+      <div class="font-size-controls">
+        <button id="fontDec" aria-label="Decrease text size">A−</button>
+        <button id="fontReset" aria-label="Reset text size">A</button>
+        <button id="fontInc" aria-label="Increase text size">A+</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<section class="hero">
+  <h1>🔐 Online Safety Quiz</h1>
+</section>
+
+<div class="quiz-wrap">
+  <div class="quiz-progress-text" id="progressText"></div>
+  <div class="quiz-progress-bar-outer"><div class="quiz-progress-bar-inner" id="progressBarInner" style="width:0%;"></div></div>
+
+  <div id="questionArea"></div>
+
+  <button id="nextBtn" disabled>Next</button>
+
+  <div id="resultArea" class="result-card hidden">
+    <h3 data-i18n="quiz_result_title">🎉 Quiz Completed!</h3>
+    <p>Your Score</p>
+    <div class="result-score" id="resultScore"></div>
+    <div class="result-percent" id="resultPercent"></div>
+    <div class="result-breakdown">
+      <span class="correct-count" id="resultCorrect"></span>
+      <span class="incorrect-count" id="resultIncorrect"></span>
+    </div>
+    <div class="result-best" id="resultBest"></div>
+    <div class="result-actions">
+      <button id="reviewBtn" class="btn btn-secondary">Review Answers</button>
+      <button id="restartBtn" class="btn btn-primary">Try Again</button>
+      <a id="nextTopicBtn" class="btn btn-secondary hidden" href="#"></a>
+      <a href="../dashboard.html" class="btn btn-secondary" data-i18n="quiz_back_dashboard">Back to Dashboard</a>
+    </div>
+    <div id="reviewList" class="review-list hidden"></div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-brand">Digital Saathi</div>
+  <div class="footer-tagline" data-i18n="footer_tagline">Learn • Practice • Stay Safe</div>
+  <div class="footer-links">
+    <a href="../index.html" data-i18n="nav_home">Home</a>
+    <a href="../index.html#learn" data-i18n="nav_learn">Learn</a>
+    <a href="../quiz.html" data-i18n="nav_quizzes">Quizzes</a>
+    <a href="../safety.html" data-i18n="nav_safety">Safety</a>
+    <a href="../dashboard.html" data-i18n="nav_dashboard">Dashboard</a>
+    <a href="../about.html" data-i18n="nav_about">About</a>
+  </div>
+  <div class="footer-copy">© 2026 Digital Saathi</div>
+</footer>
+
+<a id="chatToggle" href="../index.html#assistant" aria-label="Ask Digital Saathi">🤖</a>
+
+
+<script src="../js/question-banks.js"></script>
+<script src="../js/gamification.js"></script>
+<script src="../js/main.js"></script>
+<script>
+const quizId = "online-safety";
+const nextTopicUrl = "fake-news-quiz.html";
+const nextTopicLabel = "Fake News Awareness";
+const questions = [
+    {
+        "q": "If someone calls claiming to be from your bank and asks for your OTP, you should:",
+        "options": [
+            "Share the OTP so they can 'verify' your account",
+            "Hang up and never share your OTP with anyone",
+            "Text them the OTP instead of saying it aloud",
+            "Ask a family member to share it for you"
+        ],
+        "correct": 1,
+        "explanation": "Banks never ask for your OTP over a phone call \u2014 this is a classic scam tactic."
+    },
+    {
+        "q": "What makes a password strong?",
+        "options": [
+            "Using your name and birth year",
+            "Using '123456' because it's easy to remember",
+            "A unique mix of letters, numbers, and symbols for each account",
+            "Using the same password everywhere"
+        ],
+        "correct": 2,
+        "explanation": "Unique, complex passwords are much harder for attackers to guess or crack."
+    },
+    {
+        "q": "What is 'phishing'?",
+        "options": [
+            "A type of fishing sport",
+            "Fraudulent messages or emails designed to trick you into sharing personal information",
+            "A setting on your phone",
+            "A way to speed up the internet"
+        ],
+        "correct": 1,
+        "explanation": "Phishing messages often look official but are designed to steal your passwords, OTPs, or bank details."
+    },
+    {
+        "q": "Why does two-factor authentication (2FA) help protect your accounts?",
+        "options": [
+            "It slows down hackers by making the app load slower",
+            "It adds an extra layer of security beyond just your password",
+            "It removes the need for a password entirely",
+            "It has no real security benefit"
+        ],
+        "correct": 1,
+        "explanation": "Even if someone learns your password, 2FA requires a second step that only you can access."
+    },
+    {
+        "q": "Should you click on links sent by unknown senders?",
+        "options": [
+            "Yes, always click to see what it is",
+            "No \u2014 verify the sender first before clicking any unknown link",
+            "Only if the message uses exciting words",
+            "Yes, if it promises a prize"
+        ],
+        "correct": 1,
+        "explanation": "Unknown links can lead to fake websites designed to steal your information."
+    },
+    {
+        "q": "Which of these should you avoid sharing publicly on social media?",
+        "options": [
+            "Your favorite color",
+            "Aadhaar number, bank details, or OTPs",
+            "A photo of your lunch",
+            "Your favorite movie"
+        ],
+        "correct": 1,
+        "explanation": "Sensitive personal and financial details can be misused by scammers if shared publicly."
+    },
+    {
+        "q": "Which of these is a sign of a fake or spoofed website?",
+        "options": [
+            "A misspelled URL and no secure lock icon in the address bar",
+            "A clean, professional-looking homepage",
+            "It loads quickly",
+            "It has a phone number listed"
+        ],
+        "correct": 0,
+        "explanation": "Fake websites often use similar-looking URLs and lack proper security certificates."
+    },
+    {
+        "q": "If your account gets hacked, what's the first thing you should do?",
+        "options": [
+            "Wait a few weeks and see what happens",
+            "Change your password immediately and inform the platform or your bank",
+            "Delete your phone number",
+            "Ignore it if nothing seems missing"
+        ],
+        "correct": 1,
+        "explanation": "Acting quickly limits the damage and helps recover the account."
+    },
+    {
+        "q": "What does the padlock icon and 'https' in your browser's address bar indicate?",
+        "options": [
+            "The website is definitely fake",
+            "The connection to the website is encrypted/secure",
+            "The website is government-owned",
+            "It means nothing important"
+        ],
+        "correct": 1,
+        "explanation": "https and the padlock mean the connection is encrypted, though you should still verify the site is genuine."
+    },
+    {
+        "q": "Which is a good privacy habit on social media?",
+        "options": [
+            "Make your entire profile public to everyone",
+            "Regularly review and limit who can see your posts and personal details",
+            "Accept every friend/follow request without checking",
+            "Post your live location at all times"
+        ],
+        "correct": 1,
+        "explanation": "Reviewing your privacy settings helps control who can see your personal information."
+    }
+];
+</script>
+<script src="../js/quiz.js"></script>
+</body>
+</html>

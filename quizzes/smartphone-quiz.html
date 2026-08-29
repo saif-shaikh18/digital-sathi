@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smartphone Basics Quiz — Digital Saathi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a class="nav-brand" href="../index.html">🌐 Digital Saathi</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html" data-i18n="nav_home">Home</a></li>
+      <li><a href="../index.html#learn" data-i18n="nav_learn">Learn</a></li>
+      <li><a href="../quiz.html" data-i18n="nav_quizzes">Quizzes</a></li>
+      <li><a href="../safety.html" data-i18n="nav_safety">Safety</a></li>
+      <li><a href="../dashboard.html" data-i18n="nav_dashboard">Dashboard</a></li>
+      <li><a href="../about.html" data-i18n="nav_about">About</a></li>
+    </ul>
+    <div class="nav-controls">
+      <select id="langSelect" class="lang-select" aria-label="Choose language">
+        <option value="en">English</option>
+        <option value="hi">हिन्दी</option>
+        <option value="mr">मराठी</option>
+      </select>
+      <div class="font-size-controls">
+        <button id="fontDec" aria-label="Decrease text size">A−</button>
+        <button id="fontReset" aria-label="Reset text size">A</button>
+        <button id="fontInc" aria-label="Increase text size">A+</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<section class="hero">
+  <h1>📱 Smartphone Basics Quiz</h1>
+</section>
+
+<div class="quiz-wrap">
+  <div class="quiz-progress-text" id="progressText"></div>
+  <div class="quiz-progress-bar-outer"><div class="quiz-progress-bar-inner" id="progressBarInner" style="width:0%;"></div></div>
+
+  <div id="questionArea"></div>
+
+  <button id="nextBtn" disabled>Next</button>
+
+  <div id="resultArea" class="result-card hidden">
+    <h3 data-i18n="quiz_result_title">🎉 Quiz Completed!</h3>
+    <p>Your Score</p>
+    <div class="result-score" id="resultScore"></div>
+    <div class="result-percent" id="resultPercent"></div>
+    <div class="result-breakdown">
+      <span class="correct-count" id="resultCorrect"></span>
+      <span class="incorrect-count" id="resultIncorrect"></span>
+    </div>
+    <div class="result-best" id="resultBest"></div>
+    <div class="result-actions">
+      <button id="reviewBtn" class="btn btn-secondary">Review Answers</button>
+      <button id="restartBtn" class="btn btn-primary">Try Again</button>
+      <a id="nextTopicBtn" class="btn btn-secondary hidden" href="#"></a>
+      <a href="../dashboard.html" class="btn btn-secondary" data-i18n="quiz_back_dashboard">Back to Dashboard</a>
+    </div>
+    <div id="reviewList" class="review-list hidden"></div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-brand">Digital Saathi</div>
+  <div class="footer-tagline" data-i18n="footer_tagline">Learn • Practice • Stay Safe</div>
+  <div class="footer-links">
+    <a href="../index.html" data-i18n="nav_home">Home</a>
+    <a href="../index.html#learn" data-i18n="nav_learn">Learn</a>
+    <a href="../quiz.html" data-i18n="nav_quizzes">Quizzes</a>
+    <a href="../safety.html" data-i18n="nav_safety">Safety</a>
+    <a href="../dashboard.html" data-i18n="nav_dashboard">Dashboard</a>
+    <a href="../about.html" data-i18n="nav_about">About</a>
+  </div>
+  <div class="footer-copy">© 2026 Digital Saathi</div>
+</footer>
+
+<a id="chatToggle" href="../index.html#assistant" aria-label="Ask Digital Saathi">🤖</a>
+
+
+<script src="../js/question-banks.js"></script>
+<script src="../js/gamification.js"></script>
+<script src="../js/main.js"></script>
+<script>
+const quizId = "smartphone";
+const nextTopicUrl = "payments-quiz.html";
+const nextTopicLabel = "Digital Payments";
+const questions = [
+    {
+        "q": "What should you check before installing a new app on your smartphone?",
+        "options": [
+            "That it's from a trusted source like Google Play or the App Store",
+            "That it has a colorful icon",
+            "That your friend also has it",
+            "Nothing, just install any app"
+        ],
+        "correct": 0,
+        "explanation": "Apps from unofficial sources can contain malware. Trusted app stores review apps before publishing them."
+    },
+    {
+        "q": "What does turning on 'Airplane Mode' do?",
+        "options": [
+            "Makes your phone fly-mode faster",
+            "Turns off calls, texts, and internet connectivity",
+            "Deletes all your apps",
+            "Charges your phone faster"
+        ],
+        "correct": 1,
+        "explanation": "Airplane Mode disables wireless signals, required during flights and useful for saving battery."
+    },
+    {
+        "q": "Why is it important to update your phone's software regularly?",
+        "options": [
+            "It makes the phone heavier",
+            "It deletes your photos automatically",
+            "It fixes security bugs and improves performance",
+            "It is not important at all"
+        ],
+        "correct": 2,
+        "explanation": "Updates patch security holes and often improve speed and battery life."
+    },
+    {
+        "q": "What is the main purpose of setting a screen lock (PIN, pattern, or fingerprint)?",
+        "options": [
+            "To make the phone look nicer",
+            "To prevent others from accessing your phone if it's lost or stolen",
+            "To save battery",
+            "To increase storage space"
+        ],
+        "correct": 1,
+        "explanation": "A screen lock protects your personal data if your phone ends up in someone else's hands."
+    },
+    {
+        "q": "What should you do with apps you no longer use?",
+        "options": [
+            "Keep them forever just in case",
+            "Uninstall them to save space and reduce security risk",
+            "Share them with strangers",
+            "Turn off the phone"
+        ],
+        "correct": 1,
+        "explanation": "Unused apps take up storage and may have outdated security."
+    },
+    {
+        "q": "What does 'internal storage' on your phone mainly hold?",
+        "options": [
+            "Only contacts",
+            "Your apps, photos, and files",
+            "Only the phone's battery level",
+            "Nothing, it's just for show"
+        ],
+        "correct": 1,
+        "explanation": "Internal storage holds all your installed apps, photos, videos, and documents."
+    },
+    {
+        "q": "Why should you avoid using unknown public Wi-Fi for sensitive tasks like banking?",
+        "options": [
+            "Public Wi-Fi is always faster",
+            "Unsecured networks can expose your data to others",
+            "It uses too much battery",
+            "There is no real reason to avoid it"
+        ],
+        "correct": 1,
+        "explanation": "Open Wi-Fi networks are often unencrypted, so others on the network could see your data."
+    },
+    {
+        "q": "What is the best way to protect your important photos and contacts from being lost?",
+        "options": [
+            "Never take photos",
+            "Back them up regularly using cloud storage or a memory card",
+            "Keep only one copy on the phone",
+            "Share them publicly online"
+        ],
+        "correct": 1,
+        "explanation": "Regular backups protect your memories and contacts if your phone is lost or damaged."
+    },
+    {
+        "q": "What is the purpose of 'Do Not Disturb' mode on a smartphone?",
+        "options": [
+            "It permanently deletes notifications",
+            "It temporarily silences calls and notifications",
+            "It turns off the phone completely",
+            "It uninstalls all apps"
+        ],
+        "correct": 1,
+        "explanation": "Do Not Disturb mode mutes interruptions temporarily without switching the phone off."
+    },
+    {
+        "q": "Which of these is a good habit for keeping your phone battery healthy?",
+        "options": [
+            "Always let the battery drop to 0% before charging",
+            "Use the phone's official charger and avoid extreme heat",
+            "Charge it in direct sunlight for faster charging",
+            "Leave it charging with a damaged cable"
+        ],
+        "correct": 1,
+        "explanation": "Using the proper charger and avoiding extreme temperatures helps the battery last longer."
+    }
+];
+</script>
+<script src="../js/quiz.js"></script>
+</body>
+</html>

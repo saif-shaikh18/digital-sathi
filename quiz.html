@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quizzes — Digital Saathi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a class="nav-brand" href="index.html">🌐 Digital Saathi</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+      <li><a href="index.html#learn" data-i18n="nav_learn">Learn</a></li>
+      <li><a href="quiz.html" data-i18n="nav_quizzes">Quizzes</a></li>
+      <li><a href="safety.html" data-i18n="nav_safety">Safety</a></li>
+      <li><a href="dashboard.html" data-i18n="nav_dashboard">Dashboard</a></li>
+      <li><a href="about.html" data-i18n="nav_about">About</a></li>
+    </ul>
+    <div class="nav-controls">
+      <select id="langSelect" class="lang-select" aria-label="Choose language">
+        <option value="en">English</option>
+        <option value="hi">हिन्दी</option>
+        <option value="mr">मराठी</option>
+      </select>
+      <div class="font-size-controls">
+        <button id="fontDec" aria-label="Decrease text size">A−</button>
+        <button id="fontReset" aria-label="Reset text size">A</button>
+        <button id="fontInc" aria-label="Increase text size">A+</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>Quizzes</h1>
+  <p class="subtitle">Pick a topic and test what you've learned — 10 questions each.</p>
+</section>
+
+<div class="card-grid">
+
+  <div class="topic-card">
+    <div class="icon">📱</div>
+    <h3>Smartphone Basics</h3>
+    <p id="best-smartphone" class="hidden" style="color:#2e7d32;font-weight:bold;"></p>
+    <a class="btn btn-primary" href="quizzes/smartphone-quiz.html">Start Quiz</a>
+  </div>
+
+  <div class="topic-card">
+    <div class="icon">💳</div>
+    <h3>Digital Payments</h3>
+    <p id="best-payments" class="hidden" style="color:#2e7d32;font-weight:bold;"></p>
+    <a class="btn btn-primary" href="quizzes/payments-quiz.html">Start Quiz</a>
+  </div>
+
+  <div class="topic-card">
+    <div class="icon">🔐</div>
+    <h3>Online Safety</h3>
+    <p id="best-online-safety" class="hidden" style="color:#2e7d32;font-weight:bold;"></p>
+    <a class="btn btn-primary" href="quizzes/online-safety-quiz.html">Start Quiz</a>
+  </div>
+
+  <div class="topic-card">
+    <div class="icon">📰</div>
+    <h3>Fake News Awareness</h3>
+    <p id="best-fake-news" class="hidden" style="color:#2e7d32;font-weight:bold;"></p>
+    <a class="btn btn-primary" href="quizzes/fake-news-quiz.html">Start Quiz</a>
+  </div>
+
+  <div class="topic-card">
+    <div class="icon">🏛️</div>
+    <h3>Government Services</h3>
+    <p id="best-government" class="hidden" style="color:#2e7d32;font-weight:bold;"></p>
+    <a class="btn btn-primary" href="quizzes/government-quiz.html">Start Quiz</a>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <div class="footer-brand">Digital Saathi</div>
+  <div class="footer-tagline" data-i18n="footer_tagline">Learn • Practice • Stay Safe</div>
+  <div class="footer-links">
+    <a href="index.html" data-i18n="nav_home">Home</a>
+    <a href="index.html#learn" data-i18n="nav_learn">Learn</a>
+    <a href="quiz.html" data-i18n="nav_quizzes">Quizzes</a>
+    <a href="safety.html" data-i18n="nav_safety">Safety</a>
+    <a href="dashboard.html" data-i18n="nav_dashboard">Dashboard</a>
+    <a href="about.html" data-i18n="nav_about">About</a>
+  </div>
+  <div class="footer-copy">© 2026 Digital Saathi</div>
+</footer>
+
+<a id="chatToggle" href="index.html#assistant" aria-label="Ask Digital Saathi">🤖</a>
+
+<script src="js/gamification.js"></script>
+<script src="js/main.js"></script>
+<script>
+["smartphone","payments","online-safety","fake-news","government"].forEach(id => {
+    const best = localStorage.getItem('digitalSaathi_bestScore_' + id);
+    if (best !== null) {
+        const el = document.getElementById('best-' + id);
+        el.textContent = `🏆 Best: ${best}/10`;
+        el.classList.remove('hidden');
+    }
+});
+</script>
+</body>
+</html>

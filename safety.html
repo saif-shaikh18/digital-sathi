@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scam Awareness — Digital Saathi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a class="nav-brand" href="index.html">🌐 Digital Saathi</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+      <li><a href="index.html#learn" data-i18n="nav_learn">Learn</a></li>
+      <li><a href="quiz.html" data-i18n="nav_quizzes">Quizzes</a></li>
+      <li><a href="safety.html" data-i18n="nav_safety">Safety</a></li>
+      <li><a href="dashboard.html" data-i18n="nav_dashboard">Dashboard</a></li>
+      <li><a href="about.html" data-i18n="nav_about">About</a></li>
+    </ul>
+    <div class="nav-controls">
+      <select id="langSelect" class="lang-select" aria-label="Choose language">
+        <option value="en">English</option>
+        <option value="hi">हिन्दी</option>
+        <option value="mr">मराठी</option>
+      </select>
+      <div class="font-size-controls">
+        <button id="fontDec" aria-label="Decrease text size">A−</button>
+        <button id="fontReset" aria-label="Reset text size">A</button>
+        <button id="fontInc" aria-label="Increase text size">A+</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>🚨 Scam Awareness</h1>
+  <p class="subtitle">Learn to recognize common scams before they trick you.</p>
+</section>
+
+<div style="text-align:center;margin-bottom:20px;">
+  <a href="spot-the-scam.html" class="btn btn-primary" data-i18n="scam_game_title">🚨 Can You Spot the Scam?</a>
+</div>
+
+<div class="scam-grid">
+
+  <div class="scam-card">
+    <h3>OTP Scam</h3>
+    <p>Never share OTPs with unknown people. Banks and real companies never ask for your OTP over a call, SMS, or email.</p>
+  </div>
+
+  <div class="scam-card">
+    <h3>UPI Scam</h3>
+    <p>A UPI PIN is generally used when sending money, not for receiving money. Be suspicious if anyone asks you to enter your PIN to "receive" a payment.</p>
+  </div>
+
+  <div class="scam-card">
+    <h3>Fake Customer Care</h3>
+    <p>Use official websites or apps to find customer-care information — not random numbers found through a search engine or social media.</p>
+  </div>
+
+  <div class="scam-card">
+    <h3>Fake Job Scam</h3>
+    <p>Be careful with job offers asking for money or sensitive information upfront. Genuine employers don't ask candidates to pay for a job.</p>
+  </div>
+
+  <div class="scam-card">
+    <h3>Phishing</h3>
+    <p>Do not blindly click suspicious links in emails or messages. Check the sender and the web address carefully before entering any details.</p>
+  </div>
+
+  <div class="scam-card">
+    <h3>Fake Government Messages</h3>
+    <p>Verify information through official government channels (like .gov.in websites) rather than trusting a forwarded message or SMS link.</p>
+  </div>
+
+</div>
+
+<h2>🧠 Safe or Suspicious?</h2>
+<p class="section-lead">Read each message below and decide.</p>
+
+<div id="scenarioArea"></div>
+
+<div id="scenarioResult" class="result-card hidden" style="max-width:650px;margin:20px auto;">
+  <h3>Well done!</h3>
+  <p id="scenarioScoreText"></p>
+  <div class="result-actions">
+    <button id="scenarioRestartBtn" class="btn btn-primary">Try Again</button>
+  </div>
+</div>
+
+<script>
+const scenarios = [
+    {
+        text: "A caller says: 'I'm from your bank. Please share the OTP you just received to verify your account.'",
+        isSafe: false,
+        explanation: "Banks never ask for your OTP over a call. This is a classic scam."
+    },
+    {
+        text: "You get an SMS: 'Your bank account will be blocked today. Click this link immediately.'",
+        isSafe: false,
+        explanation: "This is a common phishing tactic using urgency. Verify through the official bank app or branch instead of clicking the link."
+    },
+    {
+        text: "You visit your bank's official app and log in using your usual PIN.",
+        isSafe: true,
+        explanation: "Using the official app you already trust and control is safe."
+    },
+    {
+        text: "A shopkeeper shows you a QR code and asks you to scan it to pay for your purchase.",
+        isSafe: true,
+        explanation: "Scanning a QR code to send payment for something you're buying is a normal, safe use of UPI."
+    },
+    {
+        text: "Someone messages: 'Scan this QR code to receive ₹2,000 refund from us.'",
+        isSafe: false,
+        explanation: "QR codes are only used to send money, never to receive it. This is a common scam trick."
+    },
+    {
+        text: "A message offers a 'guaranteed job' but asks you to first pay a registration fee.",
+        isSafe: false,
+        explanation: "Genuine employers do not ask candidates to pay money upfront. This is a common job scam."
+    },
+    {
+        text: "You receive an email from 'yourbank-verify.com' asking you to log in and confirm your details urgently.",
+        isSafe: false,
+        explanation: "This is a suspicious domain (not your real bank's official website) — a classic phishing attempt."
+    },
+    {
+        text: "A caller claiming to be tech support asks you to install a remote-access app so they can 'fix' your phone.",
+        isSafe: false,
+        explanation: "Unsolicited remote-access requests are a common scam used to steal your data or money."
+    }
+];
+
+let sCurrent = 0;
+let sScore = 0;
+const scenarioArea = document.getElementById('scenarioArea');
+const scenarioResult = document.getElementById('scenarioResult');
+const scenarioScoreText = document.getElementById('scenarioScoreText');
+const scenarioRestartBtn = document.getElementById('scenarioRestartBtn');
+
+function renderScenario() {
+    if (sCurrent >= scenarios.length) {
+        showScenarioResult();
+        return;
+    }
+    const item = scenarios[sCurrent];
+    const card = document.createElement('div');
+    card.className = 'scenario-game-card';
+    card.innerHTML = `
+        <div class="scenario-text">${item.text}</div>
+        <div class="scenario-buttons">
+            <button class="btn-safe">✅ Safe</button>
+            <button class="btn-suspicious">⚠️ Suspicious</button>
+        </div>
+        <div class="feedback"></div>
+    `;
+    scenarioArea.innerHTML = '';
+    scenarioArea.appendChild(card);
+
+    const safeBtn = card.querySelector('.btn-safe');
+    const susBtn = card.querySelector('.btn-suspicious');
+    const feedback = card.querySelector('.feedback');
+
+    function answer(choseSafe) {
+        safeBtn.disabled = true;
+        susBtn.disabled = true;
+        const correct = (choseSafe === item.isSafe);
+        if (correct) {
+            sScore++;
+            feedback.textContent = "✅ Correct! " + item.explanation;
+        } else {
+            feedback.textContent = "❌ Not quite. " + item.explanation;
+        }
+        const nextBtn = document.createElement('button');
+        nextBtn.className = 'btn btn-primary';
+        nextBtn.textContent = (sCurrent === scenarios.length - 1) ? 'See Result' : 'Next';
+        nextBtn.style.marginTop = '14px';
+        nextBtn.style.display = 'block';
+        nextBtn.style.marginLeft = 'auto';
+        nextBtn.style.marginRight = 'auto';
+        nextBtn.addEventListener('click', () => {
+            sCurrent++;
+            renderScenario();
+        });
+        card.appendChild(nextBtn);
+    }
+
+    safeBtn.addEventListener('click', () => answer(true));
+    susBtn.addEventListener('click', () => answer(false));
+}
+
+function showScenarioResult() {
+    scenarioArea.innerHTML = '';
+    scenarioResult.classList.remove('hidden');
+    scenarioScoreText.textContent = `You got ${sScore} out of ${scenarios.length} right.`;
+}
+
+scenarioRestartBtn.addEventListener('click', () => {
+    sCurrent = 0;
+    sScore = 0;
+    scenarioResult.classList.add('hidden');
+    renderScenario();
+});
+
+renderScenario();
+</script>
+
+<footer class="site-footer">
+  <div class="footer-brand">Digital Saathi</div>
+  <div class="footer-tagline" data-i18n="footer_tagline">Learn • Practice • Stay Safe</div>
+  <div class="footer-links">
+    <a href="index.html" data-i18n="nav_home">Home</a>
+    <a href="index.html#learn" data-i18n="nav_learn">Learn</a>
+    <a href="quiz.html" data-i18n="nav_quizzes">Quizzes</a>
+    <a href="safety.html" data-i18n="nav_safety">Safety</a>
+    <a href="dashboard.html" data-i18n="nav_dashboard">Dashboard</a>
+    <a href="about.html" data-i18n="nav_about">About</a>
+  </div>
+  <div class="footer-copy">© 2026 Digital Saathi</div>
+</footer>
+
+<a id="chatToggle" href="index.html#assistant" aria-label="Ask Digital Saathi">🤖</a>
+
+<script src="js/gamification.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

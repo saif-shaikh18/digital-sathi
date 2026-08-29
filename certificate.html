@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certificate — Digital Saathi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a class="nav-brand" href="index.html">🌐 Digital Saathi</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+      <li><a href="index.html#learn" data-i18n="nav_learn">Learn</a></li>
+      <li><a href="quiz.html" data-i18n="nav_quizzes">Quizzes</a></li>
+      <li><a href="safety.html" data-i18n="nav_safety">Safety</a></li>
+      <li><a href="dashboard.html" data-i18n="nav_dashboard">Dashboard</a></li>
+      <li><a href="about.html" data-i18n="nav_about">About</a></li>
+    </ul>
+    <div class="nav-controls">
+      <select id="langSelect" class="lang-select" aria-label="Choose language">
+        <option value="en">English</option>
+        <option value="hi">हिन्दी</option>
+        <option value="mr">मराठी</option>
+      </select>
+      <div class="font-size-controls">
+        <button id="fontDec" aria-label="Decrease text size">A−</button>
+        <button id="fontReset" aria-label="Reset text size">A</button>
+        <button id="fontInc" aria-label="Increase text size">A+</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1 data-i18n="cert_title">🎓 Digital Saathi Certificate</h1>
+</section>
+
+<div id="certNotEligible" class="progress-section hidden" style="text-align:center;">
+  <p data-i18n="cert_not_eligible">Complete all 5 lessons and quizzes with a good average score to unlock your certificate.</p>
+  <a href="dashboard.html" class="btn btn-primary" data-i18n="nav_dashboard">Dashboard</a>
+</div>
+
+<div id="certForm" class="cert-form">
+  <p data-i18n="cert_name_label">Enter your name for the certificate:</p>
+  <input id="certNameInput" type="text" placeholder="Your Name" maxlength="60">
+  <button id="certGenerateBtn" class="btn btn-primary" data-i18n="cert_generate">Generate Certificate</button>
+</div>
+
+<div id="certificateBlock" class="hidden">
+  <div class="certificate">
+    <div class="cert-brand">🌐 Digital Saathi</div>
+    <div class="cert-subheading" data-i18n="cert_heading">Certificate of Completion</div>
+    <p class="cert-line" data-i18n="cert_certifies">This certifies that</p>
+    <div class="cert-name" id="certName">Learner</div>
+    <p class="cert-line" data-i18n="cert_completed">has successfully completed the</p>
+    <div class="cert-program-name" data-i18n="cert_program">Digital Saathi Digital Literacy Program</div>
+    <p class="cert-pillars-line" data-i18n="cert_pillars">Digital Literacy • Online Safety • Digital Awareness</p>
+    <p class="cert-date-line">Date: <span id="certDate"></span></p>
+    <p class="cert-disclaimer" data-i18n="cert_disclaimer">This is a self-paced learning certificate from the Digital Saathi platform and is not an official government or accredited educational certification.</p>
+  </div>
+  <div style="text-align:center;margin:20px 0;" class="no-print">
+    <button onclick="window.print()" class="btn btn-primary" data-i18n="cert_print">Print Certificate</button>
+  </div>
+</div>
+
+<footer class="site-footer no-print">
+  <div class="footer-brand">Digital Saathi</div>
+  <div class="footer-tagline" data-i18n="footer_tagline">Learn • Practice • Stay Safe</div>
+  <div class="footer-links">
+    <a href="index.html" data-i18n="nav_home">Home</a>
+    <a href="index.html#learn" data-i18n="nav_learn">Learn</a>
+    <a href="quiz.html" data-i18n="nav_quizzes">Quizzes</a>
+    <a href="safety.html" data-i18n="nav_safety">Safety</a>
+    <a href="dashboard.html" data-i18n="nav_dashboard">Dashboard</a>
+    <a href="about.html" data-i18n="nav_about">About</a>
+  </div>
+  <div class="footer-copy">© 2026 Digital Saathi</div>
+</footer>
+
+<a id="chatToggle" href="index.html#assistant" aria-label="Ask Digital Saathi" class="no-print">🤖</a>
+
+<script src="js/gamification.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

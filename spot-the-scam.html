@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Can You Spot the Scam? — Digital Saathi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a class="nav-brand" href="index.html">🌐 Digital Saathi</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+      <li><a href="index.html#learn" data-i18n="nav_learn">Learn</a></li>
+      <li><a href="quiz.html" data-i18n="nav_quizzes">Quizzes</a></li>
+      <li><a href="safety.html" data-i18n="nav_safety">Safety</a></li>
+      <li><a href="dashboard.html" data-i18n="nav_dashboard">Dashboard</a></li>
+      <li><a href="about.html" data-i18n="nav_about">About</a></li>
+    </ul>
+    <div class="nav-controls">
+      <select id="langSelect" class="lang-select" aria-label="Choose language">
+        <option value="en">English</option>
+        <option value="hi">हिन्दी</option>
+        <option value="mr">मराठी</option>
+      </select>
+      <div class="font-size-controls">
+        <button id="fontDec" aria-label="Decrease text size">A−</button>
+        <button id="fontReset" aria-label="Reset text size">A</button>
+        <button id="fontInc" aria-label="Increase text size">A+</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1 data-i18n="scam_game_title">🚨 Can You Spot the Scam?</h1>
+  <p class="subtitle" data-i18n="scam_game_lead">Read each scenario and decide what you should do.</p>
+</section>
+
+<div id="scamGameArea"></div>
+
+<div id="scamGameResult" class="result-card hidden" style="max-width:650px;margin:20px auto;">
+  <h3 data-i18n="scam_game_result_title">Scams Identified</h3>
+  <div class="result-score" id="scamScore"></div>
+  <div class="result-percent" id="scamPercent"></div>
+  <p id="scamFeedbackMsg"></p>
+  <div class="result-actions">
+    <button id="scamRestartBtn" class="btn btn-primary">Try Again</button>
+    <a href="dashboard.html" class="btn btn-secondary" data-i18n="quiz_back_dashboard">Back to Dashboard</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-brand">Digital Saathi</div>
+  <div class="footer-tagline" data-i18n="footer_tagline">Learn • Practice • Stay Safe</div>
+  <div class="footer-links">
+    <a href="index.html" data-i18n="nav_home">Home</a>
+    <a href="index.html#learn" data-i18n="nav_learn">Learn</a>
+    <a href="quiz.html" data-i18n="nav_quizzes">Quizzes</a>
+    <a href="safety.html" data-i18n="nav_safety">Safety</a>
+    <a href="dashboard.html" data-i18n="nav_dashboard">Dashboard</a>
+    <a href="about.html" data-i18n="nav_about">About</a>
+  </div>
+  <div class="footer-copy">© 2026 Digital Saathi</div>
+</footer>
+
+<a id="chatToggle" href="index.html#assistant" aria-label="Ask Digital Saathi">🤖</a>
+
+<script>
+const scamScenarios = [
+    { text: "You receive a message: 'Your bank account will be blocked unless you share the OTP sent to your phone.'",
+      options: ["Share the OTP immediately to avoid being blocked", "Ignore the message and never share the OTP with anyone", "Call the number in the message to confirm", "Forward it to family to warn them"],
+      correct: 1, explanation: "Banks never ask for your OTP. This message is designed to create panic so you share sensitive information." },
+    { text: "A message says: 'Scan this QR code to receive ₹5,000 cashback instantly!'",
+      options: ["Scan it right away to get the cashback", "Ignore it — QR codes are only used to SEND money, not receive it", "Share it with 5 friends first", "Scan it and enter your PIN twice to be sure"],
+      correct: 1, explanation: "QR codes and UPI PINs are only needed to send money. Being asked to scan one to 'receive' money is a classic scam." },
+    { text: "You get a call from someone claiming to be bank customer care, asking you to install a remote-access app to 'fix an issue' with your account.",
+      options: ["Install the app since they sound official", "Refuse and hang up — legitimate support never needs remote access this way", "Install it but don't share your PIN", "Ask them to call back on WhatsApp instead"],
+      correct: 1, explanation: "Scammers use remote-access apps to see your screen and steal your PIN or OTP directly. Real support doesn't operate this way over an unsolicited call." },
+    { text: "An email from 'yourbank-verify.com' asks you to click a link and log in to 'confirm your details' within 24 hours.",
+      options: ["Click the link immediately since there's a deadline", "Check the domain carefully — it doesn't match your real bank, so don't click it", "Log in and see what happens", "Reply to the email with your account number"],
+      correct: 1, explanation: "This is phishing — the urgency and unofficial domain are red flags. Always go directly to your bank's known, official website instead." },
+    { text: "A job posting offers a work-from-home role paying very well, but asks you to pay a 'registration fee' before starting.",
+      options: ["Pay the fee since the job pays well", "Be cautious — genuine employers don't ask candidates to pay money upfront", "Pay half the fee to test it out", "Share your bank details as requested"],
+      correct: 1, explanation: "Asking candidates to pay money upfront is a common job scam pattern. Legitimate employers don't do this." },
+    { text: "You get an SMS: 'Your parcel delivery failed. Pay a small ₹10 redelivery fee here: [link]' from an unknown number.",
+      options: ["Click the link and pay the small fee", "Be suspicious of unexpected delivery fee requests via SMS links, and verify directly with the courier company", "Pay it since it's a small amount", "Forward the link to a friend to check"],
+      correct: 1, explanation: "Fake delivery fee messages are a common scam, using a very small amount to seem low-risk. Verify directly through the courier's official app or website." },
+    { text: "A government scheme message asks you to enter your Aadhaar number and bank details on a website that doesn't end in .gov.in.",
+      options: ["Enter your details since it mentions a government scheme", "Avoid the site and verify the scheme through the official government website instead", "Enter only the Aadhaar number", "Share it with relatives to also apply"],
+      correct: 1, explanation: "Legitimate government schemes are accessed through official .gov.in websites, not unofficial look-alike sites." },
+    { text: "Someone you just connected with on social media quickly starts asking for money for an 'emergency.'",
+      options: ["Send the money to help immediately", "Be cautious — this is a common social media scam pattern with new or unverified connections", "Ask them to prove it first, then send money", "Give them your bank login to help directly"],
+      correct: 1, explanation: "Urgent money requests from new or unverified online connections are a classic scam pattern." },
+    { text: "A pop-up on a website says 'Congratulations! You are the 1,000,000th visitor — claim your prize now!'",
+      options: ["Click it and claim the prize", "Close the pop-up — this is almost always a scam or malware trap", "Enter your email to see what happens", "Share the link with friends so they can also win"],
+      correct: 1, explanation: "'You've won' pop-ups are designed to trick you into giving personal information or installing malware." },
+    { text: "A caller claiming to be from the electricity board says your connection will be cut tonight unless you pay immediately via a personal UPI ID they provide.",
+      options: ["Pay immediately using the UPI ID given by the caller", "Refuse and verify directly with the electricity board through its official channels", "Ask them to send proof over SMS first, then pay", "Pay half now and half later"],
+      correct: 1, explanation: "Utility companies don't collect urgent payments through a caller's personal UPI ID. This is a pressure-based scam." }
+];
+
+let scCurrent = 0;
+let scScore = 0;
+const scamArea = document.getElementById('scamGameArea');
+const scamResult = document.getElementById('scamGameResult');
+const scamScoreEl = document.getElementById('scamScore');
+const scamPercentEl = document.getElementById('scamPercent');
+const scamFeedbackMsg = document.getElementById('scamFeedbackMsg');
+const scamRestartBtn = document.getElementById('scamRestartBtn');
+
+function renderScamScenario() {
+    if (scCurrent >= scamScenarios.length) {
+        showScamResult();
+        return;
+    }
+    const item = scamScenarios[scCurrent];
+    const card = document.createElement('div');
+    card.className = 'scenario-game-card';
+    card.innerHTML = `
+        <div class="scenario-text">${item.text}</div>
+        <p><strong>What should you do?</strong></p>
+        <div class="scenario-options" id="scamOptionsWrap"></div>
+        <div class="feedback" id="scamFeedback"></div>
+    `;
+    scamArea.innerHTML = '';
+    scamArea.appendChild(card);
+
+    const optWrap = card.querySelector('#scamOptionsWrap');
+    const feedback = card.querySelector('#scamFeedback');
+
+    item.options.forEach((text, idx) => {
+        const btn = document.createElement('button');
+        btn.textContent = text;
+        btn.addEventListener('click', () => {
+            const buttons = optWrap.querySelectorAll('button');
+            buttons.forEach((b, i) => {
+                b.disabled = true;
+                if (i === item.correct) b.classList.add('correct');
+            });
+            if (idx === item.correct) {
+                scScore++;
+                feedback.textContent = "✅ Correct! " + item.explanation;
+            } else {
+                btn.classList.add('incorrect');
+                feedback.textContent = "❌ Not quite. " + item.explanation;
+            }
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'btn btn-primary';
+            nextBtn.textContent = (scCurrent === scamScenarios.length - 1) ? 'See Result' : 'Next';
+            nextBtn.style.marginTop = '14px';
+            nextBtn.style.display = 'block';
+            nextBtn.style.marginLeft = 'auto';
+            nextBtn.style.marginRight = 'auto';
+            nextBtn.addEventListener('click', () => { scCurrent++; renderScamScenario(); });
+            card.appendChild(nextBtn);
+        });
+        optWrap.appendChild(btn);
+    });
+}
+
+function showScamResult() {
+    scamArea.innerHTML = '';
+    scamResult.classList.remove('hidden');
+    const percent = Math.round((scScore / scamScenarios.length) * 100);
+    scamScoreEl.textContent = `${scScore} / ${scamScenarios.length}`;
+    scamPercentEl.textContent = `${percent}%`;
+    scamFeedbackMsg.textContent = percent >= 80
+        ? "Great job! You identified most warning signs."
+        : "Good effort! Review the explanations above to sharpen your scam-spotting skills.";
+    if (typeof dsRecordScamChallenge === 'function') dsRecordScamChallenge(scScore);
+}
+
+scamRestartBtn.addEventListener('click', () => {
+    scCurrent = 0;
+    scScore = 0;
+    scamResult.classList.add('hidden');
+    renderScamScenario();
+});
+
+renderScamScenario();
+</script>
+
+<script src="js/gamification.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Payments Quiz — Digital Saathi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a class="nav-brand" href="../index.html">🌐 Digital Saathi</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html" data-i18n="nav_home">Home</a></li>
+      <li><a href="../index.html#learn" data-i18n="nav_learn">Learn</a></li>
+      <li><a href="../quiz.html" data-i18n="nav_quizzes">Quizzes</a></li>
+      <li><a href="../safety.html" data-i18n="nav_safety">Safety</a></li>
+      <li><a href="../dashboard.html" data-i18n="nav_dashboard">Dashboard</a></li>
+      <li><a href="../about.html" data-i18n="nav_about">About</a></li>
+    </ul>
+    <div class="nav-controls">
+      <select id="langSelect" class="lang-select" aria-label="Choose language">
+        <option value="en">English</option>
+        <option value="hi">हिन्दी</option>
+        <option value="mr">मराठी</option>
+      </select>
+      <div class="font-size-controls">
+        <button id="fontDec" aria-label="Decrease text size">A−</button>
+        <button id="fontReset" aria-label="Reset text size">A</button>
+        <button id="fontInc" aria-label="Increase text size">A+</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<section class="hero">
+  <h1>💳 Digital Payments Quiz</h1>
+</section>
+
+<div class="quiz-wrap">
+  <div class="quiz-progress-text" id="progressText"></div>
+  <div class="quiz-progress-bar-outer"><div class="quiz-progress-bar-inner" id="progressBarInner" style="width:0%;"></div></div>
+
+  <div id="questionArea"></div>
+
+  <button id="nextBtn" disabled>Next</button>
+
+  <div id="resultArea" class="result-card hidden">
+    <h3 data-i18n="quiz_result_title">🎉 Quiz Completed!</h3>
+    <p>Your Score</p>
+    <div class="result-score" id="resultScore"></div>
+    <div class="result-percent" id="resultPercent"></div>
+    <div class="result-breakdown">
+      <span class="correct-count" id="resultCorrect"></span>
+      <span class="incorrect-count" id="resultIncorrect"></span>
+    </div>
+    <div class="result-best" id="resultBest"></div>
+    <div class="result-actions">
+      <button id="reviewBtn" class="btn btn-secondary">Review Answers</button>
+      <button id="restartBtn" class="btn btn-primary">Try Again</button>
+      <a id="nextTopicBtn" class="btn btn-secondary hidden" href="#"></a>
+      <a href="../dashboard.html" class="btn btn-secondary" data-i18n="quiz_back_dashboard">Back to Dashboard</a>
+    </div>
+    <div id="reviewList" class="review-list hidden"></div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-brand">Digital Saathi</div>
+  <div class="footer-tagline" data-i18n="footer_tagline">Learn • Practice • Stay Safe</div>
+  <div class="footer-links">
+    <a href="../index.html" data-i18n="nav_home">Home</a>
+    <a href="../index.html#learn" data-i18n="nav_learn">Learn</a>
+    <a href="../quiz.html" data-i18n="nav_quizzes">Quizzes</a>
+    <a href="../safety.html" data-i18n="nav_safety">Safety</a>
+    <a href="../dashboard.html" data-i18n="nav_dashboard">Dashboard</a>
+    <a href="../about.html" data-i18n="nav_about">About</a>
+  </div>
+  <div class="footer-copy">© 2026 Digital Saathi</div>
+</footer>
+
+<a id="chatToggle" href="../index.html#assistant" aria-label="Ask Digital Saathi">🤖</a>
+
+
+<script src="../js/question-banks.js"></script>
+<script src="../js/gamification.js"></script>
+<script src="../js/main.js"></script>
+<script>
+const quizId = "payments";
+const nextTopicUrl = "online-safety-quiz.html";
+const nextTopicLabel = "Online Safety";
+const questions = [
+    {
+        "q": "What is a UPI PIN mainly used for?",
+        "options": [
+            "Unlocking your phone screen",
+            "Authorizing a digital payment securely",
+            "Logging into social media",
+            "Connecting to Wi-Fi"
+        ],
+        "correct": 1,
+        "explanation": "The UPI PIN acts like a digital signature that confirms you approve a specific payment."
+    },
+    {
+        "q": "Who should you share your UPI PIN or OTP with?",
+        "options": [
+            "Bank staff who call you",
+            "Trusted family members only",
+            "No one \u2014 never share it with anyone",
+            "Anyone who says it's urgent"
+        ],
+        "correct": 2,
+        "explanation": "Banks and legitimate services never ask for your PIN or OTP over a call, message, or email."
+    },
+    {
+        "q": "Before scanning a QR code to pay someone, you should:",
+        "options": [
+            "Scan it quickly without looking",
+            "Verify the merchant/receiver name that appears on screen",
+            "Enter your OTP right after scanning, always",
+            "Ignore the amount shown"
+        ],
+        "correct": 1,
+        "explanation": "Checking the name and amount confirms the payment is going to the right person."
+    },
+    {
+        "q": "Is scanning a QR code ever required to RECEIVE money?",
+        "options": [
+            "Yes, always scan a QR code to receive money",
+            "No \u2014 scanning a QR code is only for sending/paying money, so be suspicious if asked to scan one to 'receive' money",
+            "Only on weekends",
+            "Only if the caller insists"
+        ],
+        "correct": 1,
+        "explanation": "QR codes and UPI PINs are only needed to send money. Scammers trick people into 'scanning to receive', which actually deducts money."
+    },
+    {
+        "q": "What's a safe habit when making a UPI payment in a public place?",
+        "options": [
+            "Do it quickly while distracted",
+            "Read the amount and recipient carefully and shield your PIN entry",
+            "Ask a stranger to help you enter your PIN",
+            "Say your PIN out loud so you don't forget it"
+        ],
+        "correct": 1,
+        "explanation": "Double-checking details and covering your PIN entry protects you from mistakes and shoulder-surfing."
+    },
+    {
+        "q": "Which of these is a genuine way to identify a real payment app?",
+        "options": [
+            "It was downloaded from an official app store and is well known/verified",
+            "It promises free cash instantly for downloading",
+            "It asks for your PIN before you even make a payment",
+            "It has no reviews or developer information"
+        ],
+        "correct": 0,
+        "explanation": "Legitimate apps come from official stores with verified developer details and genuine reviews."
+    },
+    {
+        "q": "If a payment fails but money was deducted from your account, what should you do?",
+        "options": [
+            "Immediately share your OTP with a caller offering to 'fix' it",
+            "Panic and delete the app",
+            "Wait and check your transaction history \u2014 failed payments are usually auto-reversed within a few days",
+            "Make the same payment 5 more times"
+        ],
+        "correct": 2,
+        "explanation": "Failed UPI transactions are typically auto-reversed by the bank; contact your bank directly if concerned."
+    },
+    {
+        "q": "Why is it useful to keep bank SMS/transaction alerts turned on?",
+        "options": [
+            "They are not useful at all",
+            "To track and quickly spot any unauthorized transactions",
+            "To fill up your phone storage",
+            "Only to see advertisements"
+        ],
+        "correct": 1,
+        "explanation": "Instant alerts help you notice suspicious activity right away."
+    },
+    {
+        "q": "Which of these is a common sign of a payment scam?",
+        "options": [
+            "A caller asking you to install a remote screen-sharing app to 'help' with a transaction",
+            "A receipt showing your correct purchase amount",
+            "An SMS confirming a payment you actually made",
+            "A QR code displayed at a shop counter you're buying from"
+        ],
+        "correct": 0,
+        "explanation": "Scammers often ask victims to install screen-sharing apps to see PINs and OTPs directly."
+    },
+    {
+        "q": "What should you regularly check to stay safe with digital payments?",
+        "options": [
+            "Nothing, digital payments don't need checking",
+            "Your bank statement and transaction history",
+            "Only your phone's wallpaper",
+            "Other people's payment apps"
+        ],
+        "correct": 1,
+        "explanation": "Regularly reviewing your transaction history helps you catch unfamiliar or unauthorized payments early."
+    }
+];
+</script>
+<script src="../js/quiz.js"></script>
+</body>
+</html>

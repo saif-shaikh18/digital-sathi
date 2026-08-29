@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Government Digital Services — Digital Saathi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a class="nav-brand" href="../index.html">🌐 Digital Saathi</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html" data-i18n="nav_home">Home</a></li>
+      <li><a href="../index.html#learn" data-i18n="nav_learn">Learn</a></li>
+      <li><a href="../quiz.html" data-i18n="nav_quizzes">Quizzes</a></li>
+      <li><a href="../safety.html" data-i18n="nav_safety">Safety</a></li>
+      <li><a href="../dashboard.html" data-i18n="nav_dashboard">Dashboard</a></li>
+      <li><a href="../about.html" data-i18n="nav_about">About</a></li>
+    </ul>
+    <div class="nav-controls">
+      <select id="langSelect" class="lang-select" aria-label="Choose language">
+        <option value="en">English</option>
+        <option value="hi">हिन्दी</option>
+        <option value="mr">मराठी</option>
+      </select>
+      <div class="font-size-controls">
+        <button id="fontDec" aria-label="Decrease text size">A−</button>
+        <button id="fontReset" aria-label="Reset text size">A</button>
+        <button id="fontInc" aria-label="Increase text size">A+</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<div class="learn-hero">
+  <h1>🇮🇳 Government Digital Services</h1>
+  <div class="learn-flow">
+    <span>LEARN</span> → <span>PRACTICE</span> → <span>QUIZ</span> → <span>SCORE</span> → <span>PROGRESS</span>
+  </div>
+</div>
+
+<div class="learn-section">
+
+  <div class="info-block">
+    <h3>Simple Explanation</h3>
+    <p>The government offers several official digital platforms to access documents and services safely — it's important to know how to identify the real ones.</p>
+  </div>
+
+  <div class="info-block">
+    <h3>Practical Examples</h3>
+    <ul class="tips-list">
+      <li>DigiLocker lets you store and access official documents like licenses and certificates digitally.</li>
+      <li>UMANG and MyGov are official apps for accessing various government services in one place.</li>
+      <li>Genuine government websites usually end in .gov.in or .nic.in.</li>
+    </ul>
+  </div>
+
+  <div class="info-block">
+    <h3>Safety Tips</h3>
+    <ul class="tips-list">
+      <li>Always use the official government website or app.</li>
+      <li>Never click SMS links promising instant refunds.</li>
+      <li>Check that a website ends in .gov.in before entering personal details.</li>
+      <li>Never pay 'agents' extra money for guaranteed scheme approval.</li>
+      <li>Verify news about government schemes through official press releases.</li>
+    </ul>
+  </div>
+
+  <div class="info-block">
+    <h3>Real-World Scenario — Practice</h3>
+    <div class="scenario-box">
+      <p>You get an SMS: 'Claim your government subsidy now by clicking this link and entering your Aadhaar number.'</p>
+      <p><strong>What should you do?</strong></p>
+    </div>
+    <div class="scenario-options" id="scenarioOptions"></div>
+    <div class="scenario-feedback" id="scenarioFeedback"></div>
+  </div>
+
+  <div class="learn-page-actions">
+    <a href="../quizzes/government-quiz.html" class="btn btn-primary">Take the Government Digital Services Quiz</a>
+    <a href="../safety.html" class="btn btn-secondary">Next: Scam Awareness</a>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <div class="footer-brand">Digital Saathi</div>
+  <div class="footer-tagline" data-i18n="footer_tagline">Learn • Practice • Stay Safe</div>
+  <div class="footer-links">
+    <a href="../index.html" data-i18n="nav_home">Home</a>
+    <a href="../index.html#learn" data-i18n="nav_learn">Learn</a>
+    <a href="../quiz.html" data-i18n="nav_quizzes">Quizzes</a>
+    <a href="../safety.html" data-i18n="nav_safety">Safety</a>
+    <a href="../dashboard.html" data-i18n="nav_dashboard">Dashboard</a>
+    <a href="../about.html" data-i18n="nav_about">About</a>
+  </div>
+  <div class="footer-copy">© 2026 Digital Saathi</div>
+</footer>
+
+<a id="chatToggle" href="../index.html#assistant" aria-label="Ask Digital Saathi">🤖</a>
+
+
+<script src="../js/gamification.js"></script>
+<script src="../js/main.js"></script>
+<script>
+const scOptions = ["Click the link and enter your Aadhaar number", "Ignore it and verify through the official government website or app instead", "Forward it to family members so they can also claim it", "Reply with your bank account number"];
+const scCorrect = 1;
+const scExplanation = "Government refunds and subsidies are never claimed through random SMS links. Always verify through an official source.";
+const optWrap = document.getElementById('scenarioOptions');
+const feedbackEl = document.getElementById('scenarioFeedback');
+scOptions.forEach((text, idx) => {
+    const btn = document.createElement('button');
+    btn.textContent = String.fromCharCode(65 + idx) + '. ' + text;
+    btn.addEventListener('click', () => {
+        const buttons = optWrap.querySelectorAll('button');
+        buttons.forEach((b, i) => {
+            b.disabled = true;
+            if (i === scCorrect) b.classList.add('correct');
+        });
+        if (idx !== scCorrect) btn.classList.add('incorrect');
+        feedbackEl.textContent = (idx === scCorrect ? '✅ Correct! ' : '❌ Not quite. ') + scExplanation;
+    
+        if (typeof dsMarkLessonComplete === 'function' && !dsIsLessonComplete('government')) {
+            dsMarkLessonComplete('government');
+        }
+    });
+    optWrap.appendChild(btn);
+});
+</script>
+</body>
+</html>

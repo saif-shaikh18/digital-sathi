@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Government Services Quiz — Digital Saathi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a class="nav-brand" href="../index.html">🌐 Digital Saathi</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html" data-i18n="nav_home">Home</a></li>
+      <li><a href="../index.html#learn" data-i18n="nav_learn">Learn</a></li>
+      <li><a href="../quiz.html" data-i18n="nav_quizzes">Quizzes</a></li>
+      <li><a href="../safety.html" data-i18n="nav_safety">Safety</a></li>
+      <li><a href="../dashboard.html" data-i18n="nav_dashboard">Dashboard</a></li>
+      <li><a href="../about.html" data-i18n="nav_about">About</a></li>
+    </ul>
+    <div class="nav-controls">
+      <select id="langSelect" class="lang-select" aria-label="Choose language">
+        <option value="en">English</option>
+        <option value="hi">हिन्दी</option>
+        <option value="mr">मराठी</option>
+      </select>
+      <div class="font-size-controls">
+        <button id="fontDec" aria-label="Decrease text size">A−</button>
+        <button id="fontReset" aria-label="Reset text size">A</button>
+        <button id="fontInc" aria-label="Increase text size">A+</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<section class="hero">
+  <h1>🏛️ Government Services Quiz</h1>
+</section>
+
+<div class="quiz-wrap">
+  <div class="quiz-progress-text" id="progressText"></div>
+  <div class="quiz-progress-bar-outer"><div class="quiz-progress-bar-inner" id="progressBarInner" style="width:0%;"></div></div>
+
+  <div id="questionArea"></div>
+
+  <button id="nextBtn" disabled>Next</button>
+
+  <div id="resultArea" class="result-card hidden">
+    <h3 data-i18n="quiz_result_title">🎉 Quiz Completed!</h3>
+    <p>Your Score</p>
+    <div class="result-score" id="resultScore"></div>
+    <div class="result-percent" id="resultPercent"></div>
+    <div class="result-breakdown">
+      <span class="correct-count" id="resultCorrect"></span>
+      <span class="incorrect-count" id="resultIncorrect"></span>
+    </div>
+    <div class="result-best" id="resultBest"></div>
+    <div class="result-actions">
+      <button id="reviewBtn" class="btn btn-secondary">Review Answers</button>
+      <button id="restartBtn" class="btn btn-primary">Try Again</button>
+      <a id="nextTopicBtn" class="btn btn-secondary hidden" href="#"></a>
+      <a href="../dashboard.html" class="btn btn-secondary" data-i18n="quiz_back_dashboard">Back to Dashboard</a>
+    </div>
+    <div id="reviewList" class="review-list hidden"></div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-brand">Digital Saathi</div>
+  <div class="footer-tagline" data-i18n="footer_tagline">Learn • Practice • Stay Safe</div>
+  <div class="footer-links">
+    <a href="../index.html" data-i18n="nav_home">Home</a>
+    <a href="../index.html#learn" data-i18n="nav_learn">Learn</a>
+    <a href="../quiz.html" data-i18n="nav_quizzes">Quizzes</a>
+    <a href="../safety.html" data-i18n="nav_safety">Safety</a>
+    <a href="../dashboard.html" data-i18n="nav_dashboard">Dashboard</a>
+    <a href="../about.html" data-i18n="nav_about">About</a>
+  </div>
+  <div class="footer-copy">© 2026 Digital Saathi</div>
+</footer>
+
+<a id="chatToggle" href="../index.html#assistant" aria-label="Ask Digital Saathi">🤖</a>
+
+
+<script src="../js/question-banks.js"></script>
+<script src="../js/gamification.js"></script>
+<script src="../js/main.js"></script>
+<script>
+const quizId = "government";
+const nextTopicUrl = null;
+const nextTopicLabel = null;
+const questions = [
+    {
+        "q": "What is the safest way to access government services online?",
+        "options": [
+            "Through a link sent by SMS from an unknown number",
+            "Using the official government website or app",
+            "Through a random search result ad",
+            "Through a social media post"
+        ],
+        "correct": 1,
+        "explanation": "Official government websites and apps are the verified, secure way to access real services."
+    },
+    {
+        "q": "You receive an SMS promising a government refund if you click a link. What should you do?",
+        "options": [
+            "Click it immediately to claim the refund",
+            "Don't click it \u2014 it's likely a scam",
+            "Forward it to friends first",
+            "Reply with your bank details"
+        ],
+        "correct": 1,
+        "explanation": "Government refunds are never processed by clicking random SMS links."
+    },
+    {
+        "q": "Which of these is typically part of an official Indian government website address?",
+        "options": [
+            ".gov.in",
+            ".shop",
+            ".xyz",
+            ".win"
+        ],
+        "correct": 0,
+        "explanation": "Official Indian government websites usually end in .gov.in or .nic.in."
+    },
+    {
+        "q": "When should you share your Aadhaar number?",
+        "options": [
+            "With anyone who asks over the phone",
+            "Only with trusted, verified, official sources when required",
+            "On any website that asks for it",
+            "In public social media posts"
+        ],
+        "correct": 1,
+        "explanation": "Aadhaar is sensitive personal ID data and should only be shared with verified, legitimate institutions."
+    },
+    {
+        "q": "What is DigiLocker used for?",
+        "options": [
+            "Playing games online",
+            "Storing and accessing official documents digitally",
+            "Booking movie tickets",
+            "Sending money to friends"
+        ],
+        "correct": 1,
+        "explanation": "DigiLocker is an official government platform for securely storing documents like licenses and certificates."
+    },
+    {
+        "q": "Before entering personal details on a government-looking website, you should check:",
+        "options": [
+            "That the URL is official and shows a secure lock icon (https)",
+            "That the website has a nice background color",
+            "Nothing, all websites are safe",
+            "That it loads quickly"
+        ],
+        "correct": 0,
+        "explanation": "Checking the URL and security indicators helps confirm you're on the genuine site."
+    },
+    {
+        "q": "A caller claims to be a government official and asks for your OTP or Aadhaar number over the phone. What should you do?",
+        "options": [
+            "Share it since they said it's official",
+            "Refuse and verify through official government channels instead",
+            "Share only the Aadhaar number, not the OTP",
+            "Ask them to call back later and then share it"
+        ],
+        "correct": 1,
+        "explanation": "Real government officials do not ask for OTPs over the phone."
+    },
+    {
+        "q": "Which of these is an example of a legitimate government online service?",
+        "options": [
+            "Income tax e-filing portal",
+            "A website offering free government cash for personal details",
+            "A random app promising instant subsidy transfers",
+            "A WhatsApp forward with a claim form"
+        ],
+        "correct": 0,
+        "explanation": "The income tax e-filing portal is an official, verified government service."
+    },
+    {
+        "q": "What's a safe way to verify if a government scheme announced in the news is real?",
+        "options": [
+            "Trust any WhatsApp forward about it",
+            "Check the official press release or PIB fact-check page",
+            "Believe it if a stranger calls to confirm it",
+            "Assume it's real if it sounds good"
+        ],
+        "correct": 1,
+        "explanation": "Official press releases and government fact-checking services confirm whether a scheme is genuine."
+    },
+    {
+        "q": "What should you never do when applying online for a government scheme?",
+        "options": [
+            "Use the official portal",
+            "Pay unofficial 'agents' extra money for a guaranteed approval",
+            "Keep a copy of your application receipt",
+            "Double-check the eligibility criteria"
+        ],
+        "correct": 1,
+        "explanation": "Government schemes don't require paying middlemen for approval \u2014 this is a common scam."
+    }
+];
+</script>
+<script src="../js/quiz.js"></script>
+</body>
+</html>
