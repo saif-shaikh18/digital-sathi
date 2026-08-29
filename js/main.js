@@ -701,44 +701,31 @@ function dsFallbackReply(userText, lang, contextEntry) {
     return { entry: null, text: fallback[lang] || fallback.en };
 }
 
-/* Optional real-AI layer. Uses the person's own Anthropic API key
-   (never shipped with this project, entered locally via the ⚙
-   button and stored only in this browser's localStorage). Falls
-   back to the local knowledge base above on any failure. */
+/* Secure Gemini AI layer via Vercel backend.
+   Sends user queries to the serverless function and falls back to
+   the local knowledge base on any failure. */
 async function dsCallRealAI(history, lang) {
-    const key = dsGetAiKey();
-    if (!key) return null;
-
-    const langNames = { en: "English", hi: "Hindi (हिंदी)", mr: "Marathi (मराठी)" };
-    const system = "You are 'Digital Saathi', a warm, patient digital-literacy assistant for first-time " +
-        "internet and smartphone users in India, many of whom are older adults or new learners. " +
-        "Answer ANY question the person asks — smartphones, apps, UPI/digital payments, online safety, " +
-        "passwords/OTP, spotting fake news and scams, government digital services (DigiLocker, UMANG, " +
-        "Aadhaar), and general questions too. Use simple, short sentences and step-by-step lists where " +
-        "helpful. Reply in " + (langNames[lang] || "English") + ". Never ask for or store OTPs, PINs, " +
-        "passwords, or card numbers, and warn the user if they share any by mistake.";
-
     try {
-        const response = await fetch("https://api.anthropic.com/v1/messages", {
+        // Extract the latest user message from the history array
+        const lastUserMsg = history[history.length - 1]?.content || "";
+        
+        const response = await fetch("https://digital-sathi-psi.vercel.app/api/chat", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
-                "x-api-key": key,
-                "anthropic-version": "2023-06-01",
-                "anthropic-dangerous-direct-browser-access": "true"
+                "Content-Type": "application/json"
             },
-            body: JSON.stringify({
-                model: AI_MODEL,
-                max_tokens: 700,
-                system: system,
-                messages: history
-            })
+            body: JSON.stringify({ message: lastUserMsg })
         });
+
         if (!response.ok) return null;
+        
         const data = await response.json();
-        const textBlock = (data.content || []).find(function (b) { return b.type === "text"; });
-        return textBlock ? textBlock.text : null;
+        
+        // Extract the reply text returned by Gemini API
+        const replyText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+        return replyText || null;
     } catch (err) {
+        console.error("Vercel API error:", err);
         return null;
     }
 }
