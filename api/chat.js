@@ -1,33 +1,25 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  // 1. Ensure API Key exists
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    return res.status(500).json({ error: "API key is missing in Vercel environment settings." });
+  }
 
-  if (req.method === 'OPTIONS') return res.status(200).end();
+  // 2. Extract prompt from frontend request
+  const userPrompt = req.body?.prompt || req.body?.message || "Hello";
 
   try {
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
-      return res.status(500).json({ error: "Missing GEMINI_API_KEY environment variable" });
-    }
-
-    let userPrompt = "Hello";
-    if (req.body?.contents?.[0]?.parts?.[0]?.text) {
-      userPrompt = req.body.contents[0].parts[0].text;
-    } else if (req.body?.prompt) {
-      userPrompt = req.body.prompt;
-    } else if (req.body?.message) {
-      userPrompt = req.body.message;
-    }
-
+    // 3. Initialize Gemini SDK
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
 
+    // 4. Generate AI response
     const result = await model.generateContent(userPrompt);
     const responseText = result.response.text();
 
+    // 5. Send clean response back to frontend
     return res.status(200).json({
       candidates: [
         {
