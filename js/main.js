@@ -720,7 +720,7 @@ async function dsCallRealAI(history, lang) {
         if (!response.ok) return null;
         
         const data = await response.json();
-        const replyText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+        const replyText = data?.reply;
         return replyText || null;
     } catch (err) {
         console.error("Vercel API error:", err);
