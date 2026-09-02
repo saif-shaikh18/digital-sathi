@@ -24,7 +24,10 @@ module.exports = async function handler(req, res) {
     }
 
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-3.6-flash" });
+    const model = genAI.getGenerativeModel({ 
+  model: "gemini-3.6-flash",
+  systemInstruction: "You are Digital Saathi, a friendly and helpful assistant for digital literacy. Help users learn about smartphones, UPI payments, online safety, fake news, and government services clearly and concisely. Never break character."
+});
 
     const result = await model.generateContent(textInput);
     const response = await result.response;
