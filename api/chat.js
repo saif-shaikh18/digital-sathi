@@ -28,7 +28,8 @@ export default async function handler(req, res) {
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     const result = await model.generateContent(userPrompt);
-    const responseText = result.response.text();
+    const response = await result.response;
+    const responseText = response.text();
 
     return res.status(200).json({ reply: responseText });
   } catch (error) {
